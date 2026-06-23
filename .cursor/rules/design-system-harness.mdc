@@ -1,0 +1,17 @@
+---
+description: Design system harness — follow CODEX.md for React/Storybook work
+globs: "src/**/*.{tsx,ts,css}"
+alwaysApply: false
+---
+
+# Design System Harness
+
+For `src/components/` work, follow [CODEX.md](../../CODEX.md):
+
+- 1 component = 4 files (tsx, types, stories, index)
+- Colors: `var(--color-*)` / Tailwind theme tokens — no `#hex` in components
+- Width: `w-full` + parent padding — no fixed `w-[NNNpx]`
+- Figma variants only — no invented props
+- Approval required before first write (see `.codex/CODEX.md`)
+
+Subagents: `.codex/agents/figma-implementer.md`, `token-checker.md`, `design-qa.md`, `design-reviewer.md`

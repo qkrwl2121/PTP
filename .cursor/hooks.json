@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeReadFile": [
+      {
+        "command": "node .codex/hooks/protect-files.mjs",
+        "matcher": "\\.env",
+        "failClosed": true
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "node .codex/hooks/protect-files.mjs",
+        "matcher": "\\.env",
+        "failClosed": true
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node .codex/hooks/check-design-tokens.mjs",
+        "matcher": "Write|Edit"
+      },
+      {
+        "command": "node .codex/hooks/check-story-exists.mjs",
+        "matcher": "Write|Edit"
+      }
+    ],
+    "stop": [
+      {
+        "command": "node .codex/hooks/notify.mjs Design Codex Session complete"
+      }
+    ]
+  }
+}

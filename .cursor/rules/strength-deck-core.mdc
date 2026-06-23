@@ -1,0 +1,17 @@
+---
+description: Strength Deck core conventions — stack, state, and change rules
+alwaysApply: true
+---
+
+# Strength Deck Core
+
+Vanilla PWA: `index.html` + `styles.css` + `app.js`. No framework, no bundler.
+
+- Storage: `localStorage` key `strength-deck-state-v1`. Never rename without migration.
+- State: multi-user `{ users[], activeUserId }`. Always mutate via `activeUser()`, then `saveState()` + `renderAll()`.
+- UI language: Korean copy; English eyebrows only (Today, Calendar, My Page).
+- Design: dark Spotify-style tokens in `:root`. Accent `#1ed760` only. See `docs/DESIGN-SYSTEM.md`.
+- SW cache: bump `CACHE_NAME` in `sw.js` when static assets change.
+- Docs: `AGENTS.md` is the entry point; `docs/` has architecture, data model, program logic.
+
+When adding features, reuse `.panel`, `.exercise-card`, `.set-row`, `.badge`, pill buttons — do not invent new visual patterns.

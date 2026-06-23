@@ -1,0 +1,25 @@
+---
+description: Strength Deck UI — tokens, components, layout consistency
+globs: "**/*.{html,css}"
+alwaysApply: false
+---
+
+# UI Consistency
+
+Use CSS variables from `:root` — never hardcode new hex colors in HTML/CSS except confetti.
+
+| Token | Use |
+|-------|-----|
+| `--green` | Primary CTA, active date tab, completed calendar |
+| `--surface` / `--surface-2` | Cards vs inputs/rows |
+| `--muted` | Secondary text |
+
+Components:
+- Buttons: `.primary` / `.secondary` (pill, 56px min-height)
+- Cards: `.panel`, `.exercise-card` (8px radius, 22px padding)
+- Labels: `.eyebrow` above headings
+- Lists: `.set-row` (3-col grid), `.badge` for tags
+
+Layout: `.app-shell` max 960px; bottom `.bottom-appbar` fixed — leave 112px bottom padding on main content.
+
+New screens: match existing SVG icon style (24×24, stroke 2.2, round caps). Profile flows go in `#profileDrawer` sub-views.

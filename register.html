@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121212" />
+    <title>회원가입 | Strength Deck</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="auth-page">
+    <main class="auth-page-shell">
+      <a class="auth-back-link" href="index.html" aria-label="앱으로 돌아가기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+        돌아가기
+      </a>
+
+      <section class="panel auth-page-panel" aria-labelledby="registerTitle">
+        <div class="section-head">
+          <p class="eyebrow">My Page</p>
+          <h1 id="registerTitle">회원가입</h1>
+          <p>아이디와 비밀번호만 입력하면 이 기기의 운동 데이터를 서버에 백업하고 다른 기기에서 이어서 사용할 수 있습니다.</p>
+        </div>
+
+        <form class="grid-form auth-form" id="registerPageForm">
+          <label class="wide">
+            <span>아이디</span>
+            <input name="username" type="text" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9][A-Za-z0-9_-]{2,23}" placeholder="strengthdeck" required />
+          </label>
+          <label class="wide">
+            <span>비밀번호</span>
+            <input name="password" type="password" autocomplete="new-password" minlength="8" placeholder="8자 이상" required />
+          </label>
+          <button class="primary wide" type="submit">회원가입</button>
+        </form>
+
+        <p class="auth-page-message" id="registerMessage" role="status" aria-live="polite"></p>
+        <a class="secondary wide auth-page-login" href="index.html">이미 계정이 있어요</a>
+      </section>
+    </main>
+
+    <script>
+      const form = document.querySelector("#registerPageForm");
+      const message = document.querySelector("#registerMessage");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        message.textContent = "회원가입 중입니다...";
+        const body = Object.fromEntries(new FormData(form).entries());
+
+        try {
+          const response = await fetch("/api/auth/register", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(body),
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.message || "회원가입에 실패했습니다.");
+          window.location.href = "index.html";
+        } catch (error) {
+          message.textContent = error.message || "회원가입에 실패했습니다.";
+        }
+      });
+    </script>
+  </body>
+</html>

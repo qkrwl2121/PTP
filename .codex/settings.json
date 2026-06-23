@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "description": "Strength Deck design system harness — Codex agent & hook configuration",
+  "permissions": {
+    "denyRead": [".env", ".env.*", ".env.local", ".env.production"],
+    "denyWrite": [".env", ".env.*"]
+  },
+  "agents": {
+    "orchestrator": ".agents/orchestrator.md",
+    "product-planner": ".agents/product-planner.md",
+    "ux-designer": ".agents/ux-designer.md",
+    "ui-designer": ".agents/ui-designer.md",
+    "frontend-developer": ".agents/frontend-developer.md",
+    "program-logic-specialist": ".agents/program-logic-specialist.md",
+    "data-offline-specialist": ".agents/data-offline-specialist.md",
+    "qa-accessibility-tester": ".agents/qa-accessibility-tester.md",
+    "release-manager": ".agents/release-manager.md",
+    "documentation-maintainer": ".agents/documentation-maintainer.md",
+    "figma-implementer": ".codex/agents/figma-implementer.md",
+    "token-checker": ".codex/agents/token-checker.md",
+    "design-qa": ".codex/agents/design-qa.md",
+    "design-reviewer": ".codex/agents/design-reviewer.md"
+  },
+  "process": ".codex/CODEX.md",
+  "rules": "CODEX.md",
+  "hooks": {
+    "beforeReadFile": [
+      {
+        "command": "node .codex/hooks/protect-files.mjs",
+        "matcher": "\\.env",
+        "failClosed": true
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "node .codex/hooks/protect-files.mjs",
+        "matcher": "\\.env",
+        "failClosed": true
+      }
+    ],
+    "afterFileEdit": [
+      {
+        "command": "node .codex/hooks/check-design-tokens.mjs",
+        "matcher": "Write|Edit"
+      },
+      {
+        "command": "node .codex/hooks/check-story-exists.mjs",
+        "matcher": "Write|Edit"
+      }
+    ],
+    "stop": [
+      {
+        "command": "node .codex/hooks/notify.mjs Design Codex Session complete"
+      }
+    ]
+  },
+  "cursorHooksSync": ".cursor/hooks.json"
+}

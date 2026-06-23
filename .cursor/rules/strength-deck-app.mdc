@@ -1,0 +1,23 @@
+---
+description: Strength Deck app.js — render, plan engine, persistence patterns
+globs: "**/app.js"
+alwaysApply: false
+---
+
+# app.js Patterns
+
+Single-file imperative JS. Follow existing structure:
+
+1. Constants (`STORAGE_KEY`, `lifts`, `defaultProfile`) at top
+2. One-time event listeners
+3. Pure helpers → `buildPlan` / `prescription` → `render*` → persistence utils
+
+Rendering: template strings into innerHTML. Match class names from `styles.css`.
+
+Weights: always `roundLoad()` for display/storage. Unit change → `convertStoredWeights()` then `rebuildPlanIfPossible()`.
+
+Plan changes: edit `buildWeeks()`, `buildSessions()` weekPlans, and `lifts` map together.
+
+New lift checklist: `lifts` object → `#maxForm` input → weekPlans prescriptions → test import/export.
+
+Check IDs: `` `${lift.name}-${index}` `` — changing breaks saved `todayChecks`.
