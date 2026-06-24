@@ -382,10 +382,24 @@ function isLocalDevelopment() {
   return ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
 }
 
+function isIosDevice() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function shouldUseServiceWorker() {
+  return !isLocalDevelopment() && !isIosDevice();
+}
+
 function initializeAppUpdates() {
   window.addEventListener("load", async () => {
-    if (isLocalDevelopment()) {
+    if (!shouldUseServiceWorker()) {
+      const hadController = Boolean(navigator.serviceWorker?.controller);
       await clearAppCaches();
+      await checkDeploymentVersion();
+      if (hadController && !sessionStorage.getItem("strength-deck-sw-clean-reload")) {
+        sessionStorage.setItem("strength-deck-sw-clean-reload", "1");
+        window.location.reload();
+      }
       return;
     }
 

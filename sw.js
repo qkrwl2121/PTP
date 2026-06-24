@@ -1,4 +1,4 @@
-const CACHE_NAME = "strength-deck-v34";
+const CACHE_NAME = "strength-deck-v35";
 const ASSETS = ["./", "./index.html", "./register.html", "./update.html", "./styles.css", "./app.js", "./version.json", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (event) => {
